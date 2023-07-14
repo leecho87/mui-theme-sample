@@ -1,0 +1,9 @@
+:root {
+    --main-color: pink;
+    --txt-main-color: #333;
+    --txt-sub-color: #999;
+    --border-main-color: blue;
+    --border-sub-color: skyblue;
+    --bg-main-color: gray;
+    --bg-sub-color:lightgray;
+}

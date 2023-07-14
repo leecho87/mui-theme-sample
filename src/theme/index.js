@@ -1,10 +1,26 @@
-import { createTheme } from "@mui/material";
-import { orange } from "@mui/material/colors";
+import { createTheme as MuiCreateTheme } from "@mui/material";
+import breakPoint from "./breakpoint";
+import component from "./components";
+import palette from "./palette";
 
-const theme = createTheme({
-    status: {
-        danger: orange[500]
-    }
-})
+import MODES from "./mode";
 
-export default theme;
+
+const createTheme = (mode) => {
+    const selectTheme = MODES.filter((item) => item.name === mode)[0] || MODES[0];
+
+    return MuiCreateTheme(
+        {
+            spacing: 4,
+            breakpoints: breakPoint,
+            palette: palette,
+            components: component
+        },
+        {
+            name: selectTheme.name,
+            header: selectTheme.header
+        }
+    )
+}
+
+export default createTheme;
