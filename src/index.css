@@ -7,3 +7,6 @@
     --bg-main-color: gray;
     --bg-sub-color:lightgray;
 }
+/* html,body,#root {
+    min-height:100vh;
+} */

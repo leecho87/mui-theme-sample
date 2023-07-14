@@ -6,21 +6,22 @@ import palette from "./palette";
 import MODES from "./mode";
 
 
-const createTheme = (mode) => {
-    const selectTheme = MODES.filter((item) => item.name === mode)[0] || MODES[0];
+const generateTheme = (mode) => {
+    const selectTheme = mode ? MODES.filter((item) => item.name === mode)[0] : MODES[0]
 
     return MuiCreateTheme(
         {
             spacing: 4,
             breakpoints: breakPoint,
             palette: palette,
-            components: component
+            components: component,
         },
         {
             name: selectTheme.name,
-            header: selectTheme.header
+            header: selectTheme.header,
+            footer: selectTheme.footer,
         }
     )
 }
 
-export default createTheme;
+export default generateTheme;

@@ -4,6 +4,10 @@ const MODES = [
         header: {
             color: "darkcyan",
             background:"darkslateblue"
+        },
+        footer: {
+            color: "darkcyan",
+            background:"darkslateblue"
         }
     },
     {
@@ -11,8 +15,12 @@ const MODES = [
         header: {
             color: "#fff",
             background:"#000"
+        },
+        footer: {
+            color: "#fff",
+            background:"#000"
         }
-    }
+    },
 ];
 
 export default MODES

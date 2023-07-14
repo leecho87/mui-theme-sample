@@ -1,77 +1,91 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from '@emotion/styled';
-import { useTheme, Typography, Box, Button } from '@mui/material';
+import { Box, ThemeProvider, CssBaseline, Typography, Button, Grid } from '@mui/material';
 
-import "./App.scss";
-import createTheme from './theme';
+import generateTheme from './theme';
 
+const TestComponent = styled.div`
+  position:relative;
+  color:${props => props.theme.palette.text.main};
+  ${props => props.theme.breakpoints.down("md")} {
+    border:1px solid #666;
+  }
+`;
+const Header = styled(Grid)`
+   height:60px;
+   background:${props => props.theme.header.background};
+   color:${props => props.theme.header.color};
+   text-align:center;
+`;
+const Footer = styled(Grid)`
+   height:60px;
+   background:${props => props.theme.footer.background};
+   color:${props => props.theme.footer.color};
+   text-align:center;
+`;
 
-// const TestComponent = styled.div`
-//   position:relative;
-//   color:${props => props.theme.palette.text.main};
-//   ${props => props.theme.breakpoints.down("md")} {
-//     border:1px solid #666;
-//   }
-// `
+const App = () => {
+  const [mode, setMode] = useState(localStorage.getItem("themeMode") || 'light');
 
-// const Header = styled.div`
-//    background:${props => props.theme.header.background};
-//    color:${props => props.theme.header.color};
-// `;
-
-
-function App({ changeTheme }) {
-  const theme = useTheme();
-
-  // const [mode, setMode] = useState(localStorage.getItem("themeMode") || 'light')
-
-  // const theme = useMemo(() => {
-  //   console.log('theme', createTheme(mode))
-  //   return createTheme(mode)
-  // }, [mode]);
-
-  // const changeTheme = (value) => {
-  //   localStorage.setItem("themeMode", value);
-  //   setMode(value);
-  // }
+  const theme = useMemo(() => {
+    localStorage.setItem("themeMode", mode);
+    return generateTheme(mode);
+  }, [mode])
 
   return (
-    <Box className='box'>
-      {/* <Header>HEADER</Header>
-      <Box className="footer">FOOTER</Box>
-
-      <Typography
-        component={"h1"}
-        className='title'
-        sx={{
-          pb: theme.spacing(3)
-        }}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Grid
+        container
+        direction={"column"}
+        sx={{ minHeight: '100vh' }}
       >
-        제목
-      </Typography>
+        <Header item>HEADER</Header>
+        <Grid item xs>
+          <Typography
+            component={"h1"}
+            className='title'
+            sx={{ pb: theme.spacing(3) }}
+          >
+            제목
+          </Typography>
 
-      <TestComponent>TestComponent</TestComponent>
+          <TestComponent>TestComponent</TestComponent>
 
-      <hr />
+          <Box>
+            <Button
+              sx={{ 
+                color: theme.palette.main.text,
+                border: `1px solid ${theme.palette.main.border}`,
+              }}
+            >
+              MAIN COLOR BUTTON
+            </Button>
+          </Box>
 
-      <Button sx={{ 
-        color: theme.palette.main.text,
-        border: `1px solid ${theme.palette.main.border}`,
-      }}>
-        MAIN COLOR BUTTON
-      </Button>
-      <Button sx={{ 
-        color: theme.palette.sub.text,
-        border: `1px solid var(--border-sub-color)`,
-      }}>SUB COLOR BUTTON</Button> */}
+          <Box>
+            <Button
+              sx={{ 
+                color: theme.palette.sub.text,
+                border: `1px solid var(--border-sub-color)`,
+              }}
+            >
+              SUB COLOR BUTTON
+            </Button>
+          </Box>
 
+          <Box>
+            <Button color="primary" variant="outlined" onClick={() => setMode("light")}>light</Button>
+          </Box>
 
-      <Button color="primary" variant="outlined" onClick={() => changeTheme("light")}>라이트</Button>
-
-      <Button color="primary" variant="contained" onClick={() => changeTheme("dark")}>다크</Button>
-
-    </Box>
+          <Box>
+            <Button color="primary" variant="contained" onClick={() => setMode("dark")}>dark</Button>
+          </Box>
+        </Grid>
+        <Footer item>FOOTER</Footer>
+      </Grid>
+    </ThemeProvider>
   )
 }
 
-export default App
+export default App;
